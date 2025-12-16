@@ -31,7 +31,8 @@ interface SocketContextType {
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
 
-const SOCKET_URL = 'http://localhost:5000';
+// Production da environment variable dan oladi, development da localhost ishlatadi
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
 
 export const SocketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { token, user } = useAuth();

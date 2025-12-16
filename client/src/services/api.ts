@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { AuthResponse, Conversation, Message, User, UserSettings } from '../types';
 
+// Production da environment variable dan oladi, development da /api ishlatadi
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${API_URL}/api`,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -221,5 +224,8 @@ export const settingsApi = {
     return response.data;
   }
 };
+
+// Get API URL for file uploads
+export const getApiUrl = () => API_URL || window.location.origin;
 
 export default api;

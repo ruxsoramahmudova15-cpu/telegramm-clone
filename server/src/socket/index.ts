@@ -18,8 +18,17 @@ const USE_MOCK = process.env.USE_MOCK === 'true';
 const onlineUsers = new Map<string, Set<string>>();
 
 export const initializeSocket = (httpServer: HttpServer): Server => {
+  // CORS configuration - production va development uchun
+  const corsOrigin = process.env.NODE_ENV === 'production'
+    ? process.env.CLIENT_URL || '*'
+    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'];
+
   const io = new Server(httpServer, {
-    cors: { origin: 'http://localhost:5173', credentials: true }
+    cors: { 
+      origin: corsOrigin, 
+      credentials: true,
+      methods: ['GET', 'POST']
+    }
   });
 
   io.use(async (socket: AuthenticatedSocket, next) => {
