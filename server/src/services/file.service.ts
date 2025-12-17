@@ -49,7 +49,7 @@ const ALLOWED_MIME_TYPES = [
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
 export class FileService {
-  validateFile(file: Express.Multer.File): { valid: boolean; error?: string } {
+  validateFile(file: any): { valid: boolean; error?: string } {
     if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
       return { valid: false, error: 'Bu fayl turi qo\'llab-quvvatlanmaydi' };
     }
@@ -59,7 +59,7 @@ export class FileService {
     return { valid: true };
   }
 
-  async uploadFile(file: Express.Multer.File, userId: string, messageId?: string): Promise<FileData> {
+  async uploadFile(file: any, userId: string, messageId?: string): Promise<FileData> {
     const validation = this.validateFile(file);
     if (!validation.valid) throw new Error(validation.error);
 

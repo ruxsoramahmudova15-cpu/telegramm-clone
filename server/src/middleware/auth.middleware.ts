@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import { authService } from '../services/auth.service';
 import { JWTPayload } from '../types';
 
-export interface AuthRequest extends Request {
+// AuthRequest - Request bilan bir xil, faqat user va userId qo'shilgan
+export type AuthRequest = Request & {
   user?: JWTPayload;
   userId?: string;
-}
+};
 
 export const authMiddleware = async (
   req: AuthRequest,
