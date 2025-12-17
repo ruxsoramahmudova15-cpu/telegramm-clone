@@ -19,7 +19,7 @@ export class GroupService {
       return { success: true, group };
     }
 
-    const group = await Conversation.create({
+    const group: any = await Conversation.create({
       type: 'group',
       name,
       description,
@@ -27,7 +27,7 @@ export class GroupService {
       participants,
       admins: [creatorId],
       createdBy: creatorId
-    });
+    } as any);
 
     return { success: true, group: {
       id: group._id.toString(),
@@ -35,8 +35,8 @@ export class GroupService {
       name: group.name,
       description: group.description,
       picture: group.picture,
-      participants: group.participants.map(p => p.toString()),
-      admins: group.admins.map(a => a.toString()),
+      participants: group.participants.map((p: any) => p.toString()),
+      admins: group.admins.map((a: any) => a.toString()),
       createdBy: group.createdBy?.toString(),
       createdAt: group.createdAt,
       updatedAt: group.updatedAt

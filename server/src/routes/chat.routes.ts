@@ -63,12 +63,12 @@ router.post('/create', authMiddleware, async (req: AuthRequest, res: Response): 
     }
 
     // Create new chat
-    const newChat = await Conversation.create({
+    const newChat: any = await Conversation.create({
       type,
       name,
       participants: [currentUserId, participantId],
       admins: type === 'group' ? [currentUserId] : []
-    });
+    } as any);
 
     await newChat.populate('participants', 'displayName username profilePicture isOnline lastSeen');
 
@@ -243,7 +243,7 @@ router.get('/:id/messages', authMiddleware, async (req: AuthRequest, res: Respon
         profilePicture: (msg.senderId as any).profilePicture
       } : null,
       content: msg.content,
-      messageType: msg.messageType,
+      type: msg.type,
       createdAt: msg.createdAt
     }));
 

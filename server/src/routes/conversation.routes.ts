@@ -30,8 +30,7 @@ router.get('/:id/messages', authMiddleware, async (req: AuthRequest, res: Respon
     const messages = await messageService.getConversationMessages(
       id,
       req.user!.userId,
-      limit ? parseInt(limit as string) : 50,
-      before as string
+      limit ? parseInt(limit as string) : 50
     );
 
     res.json({

@@ -4,6 +4,7 @@ import { JWTPayload } from '../types';
 
 export interface AuthRequest extends Request {
   user?: JWTPayload;
+  userId?: string;
 }
 
 export const authMiddleware = async (
@@ -34,6 +35,7 @@ export const authMiddleware = async (
     }
 
     req.user = decoded;
+    req.userId = decoded.userId;
     next();
   } catch (error) {
     res.status(500).json({

@@ -32,3 +32,10 @@ export interface JWTPayload {
   phone: string;
   username: string;
 }
+
+import { Request } from 'express';
+
+export interface AuthRequest extends Request {
+  userId?: string;
+  user?: any;
+}

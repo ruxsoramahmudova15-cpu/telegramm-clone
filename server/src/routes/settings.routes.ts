@@ -34,7 +34,7 @@ router.get('/', authMiddleware, async (req: AuthRequest, res: Response): Promise
     } else {
       const user = await User.findById(req.user!.userId).select('settings');
       if (user?.settings) {
-        settings = { ...defaultSettings, ...user.settings.toObject() };
+        settings = { ...defaultSettings, ...(user.settings as any) };
       }
     }
 
@@ -57,10 +57,10 @@ router.put('/', authMiddleware, async (req: AuthRequest, res: Response): Promise
       'theme', 'chatBackground', 'accentColor'
     ];
     
-    const validUpdates: Partial<IUserSettings> = {};
+    const validUpdates: any = {};
     for (const key of allowedFields) {
       if (updates[key] !== undefined) {
-        validUpdates[key as keyof IUserSettings] = updates[key];
+        validUpdates[key] = updates[key];
       }
     }
 
@@ -80,7 +80,7 @@ router.put('/', authMiddleware, async (req: AuthRequest, res: Response): Promise
       ).select('settings');
       
       if (user?.settings) {
-        settings = user.settings.toObject();
+        settings = user.settings as any;
       }
     }
 
